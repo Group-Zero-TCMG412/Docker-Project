@@ -1,10 +1,10 @@
 from flask import Flask
 from markupsafe import escape
+from flask import jsonify
 #from redis import Redis, RedisError
 import hashlib
 import os
 import socket
-
 # Connect to Redis
 
 app = Flask(__name__)
@@ -21,9 +21,9 @@ def hello():
 
 @app.route("/md5/<string>")
 def md5(string):
-    encoded = string.encode()
-    result = hashlib.md5(encoded)
-    return f'String {(string)} \n Encoded: {(result)}'
+    result = hashlib.md5(string.encode('utf-8')).hexdigest()
+    
+    return f'String: {(string)} Hash: {(result)}'
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
