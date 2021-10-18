@@ -1,6 +1,6 @@
-from flask import Flask
+from flask import Flask, jsonify
+import json
 from markupsafe import escape
-from flask import jsonify
 #from redis import Redis, RedisError
 import hashlib
 import os
@@ -19,11 +19,13 @@ def show_user(username):
 def hello():
     return "Hello, World"
 
-@app.route("/md5/<string>")
+@app.route("/md5/<string>", methods=["GET","POST"])
 def md5(string):
     result = hashlib.md5(string.encode('utf-8')).hexdigest()
-    
-    return f'String: {(string)} Hash: {(result)}'
-
+    hashData = {'Input':string,
+            'Output':result}
+    hashjson = json.dumps(hashData)
+    print(hashjson)
+    return hashjson
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
