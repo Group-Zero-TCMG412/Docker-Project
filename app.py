@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 import json
-from markupsafe import escape
+import math
 #from redis import Redis, RedisError
 import hashlib
 import os
@@ -27,5 +27,29 @@ def md5(string):
     hashjson = json.dumps(hashData)
     print(hashjson)
     return hashjson
+
+@app.route("/factorial/<int:factor>")
+def factorial(factor):
+    i = factor
+    product = 0
+    if factor<0:
+        return 'Error, can not factor negative number.'
+    else:
+        product = math.factorial(factor)
+    factorialDict = {'Input':factor, 'Output': product}
+    return factorialDict
+@app.route("/fibonacci/<int:fib>")
+def fibonacci(fib):
+    fibArray = [0,1,1]
+    i = 1
+    while i < fib:
+        n = fibArray[-1]+fibArray[-2]
+        if n <= fib:
+            fibArray.append(n)
+        else:
+            break
+        i = n
+    fibDict = {'Input': fib, 'Output': fibArray}
+    return fibDict
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
