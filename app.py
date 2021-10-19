@@ -42,13 +42,16 @@ def factorial(factor):
 def fibonacci(fib):
     fibArray = [0,1,1]
     i = 1
-    while i < fib:
-        n = fibArray[-1]+fibArray[-2]
-        if n <= fib:
-            fibArray.append(n)
-        else:
-            break
-        i = n
+    if fib < 0:
+        return 'Error, must input a positive integer.'
+    else:
+        while i < fib:
+            n = fibArray[-1]+fibArray[-2]
+            if n <= fib:
+                fibArray.append(n)
+            else:
+                break
+            i = n
     fibDict = {'Input': fib, 'Output': fibArray}
     return fibDict
 if __name__ == "__main__":
