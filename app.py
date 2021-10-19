@@ -51,5 +51,22 @@ def fibonacci(fib):
         i = n
     fibDict = {'Input': fib, 'Output': fibArray}
     return fibDict
+
+@app.route('/is-prime/')
+def prime_response():
+    num = int(input('Input: '))
+    if num > 1:
+        for i in range(2, num):
+            if (num % i) == 0:
+                resp = False
+                break
+            else:
+                resp = True
+    else:
+        resp = False
+    
+    return "{num} is Prime: {resp}"
+           
+           
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
