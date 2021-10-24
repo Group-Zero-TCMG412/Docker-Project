@@ -65,7 +65,7 @@ def prime_response(num):
                 resp = True
     else:
         resp = False
-    primDict = {'Num': num, 'Output' resp}
+    primDict = {'Num': num, 'Output': resp}
     return "{num} is Prime: {resp}"
 
 app.secret_key = "sekret"
