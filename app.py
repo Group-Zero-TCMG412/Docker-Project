@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from flask_dance.contrib.slack import make_slack_blueprint, slack
 import json
 import math
 #from redis import Redis, RedisError
@@ -66,6 +67,26 @@ def prime_response(num):
         resp = False
     primDict = {'Num': num, 'Output' resp}
     return "{num} is Prime: {resp}"
+
+app.secret_key = "sekret"
+blueprint = make_slack_blueprint(
+    client_id="73266387591.2634598506870",
+    client_secret="410fba6fdc6db953b8bc7385399b8144",
+    scope=["identify", "chat:write:bot"],
+)
+app.register_blueprint(blueprint, url_prefix="/login")
+
+@app.route("/slack-alert/<string>")
+def slack_alert(string):
+    slack_alert = input("What do you want to say:\n")
+    if not slack.authorized:
+        return redirect(url_for("slack.login"))
+    resp = slack.post("chat.postMessage", data={
+        "channel": "#zer0",
+        "text": {slack_alert},
+    })
+    assert resp.json()["ok"], resp.text
+    return 'I just said ',{slack_alert},' in the #zer0 channel!'
            
            
 if __name__ == "__main__":
