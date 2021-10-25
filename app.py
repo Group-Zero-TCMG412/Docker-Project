@@ -88,7 +88,7 @@ def slack_alert(string):
         "text": {slack_alert},
     })
     assert resp.ok, resp.text
-    return f'I just said {(slack_alert)} in the #zer0 channel!'
+    return f'I just said {(slack_alert)} in the #testing-day channel!'
            
            
 if __name__ == "__main__":
