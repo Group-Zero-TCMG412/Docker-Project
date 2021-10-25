@@ -2,10 +2,9 @@ from flask import Flask, redirect, url_for
 from flask_dance.contrib.slack import make_slack_blueprint, slack
 import json
 import math
+from math import sqrt
 #from redis import Redis, RedisError
 import hashlib
-import os
-import socket
 # Connect to Redis
 
 app = Flask(__name__)
@@ -58,38 +57,38 @@ def fibonacci(fib):
 
 @app.route('/is-prime/<int:num>')
 def prime_response(num):
-    num = int(input('Input: '))
-    if num > 1:
-        for i in range(2, num):
-            if (num % i) == 0:
-                resp = False
+    if num > 3:
+        for n in range(2, int(sqrt(num))+1):
+            if (num % n) == 0:
+                resp = 'False'
                 break
             else:
-                resp = True
+                resp = 'True'
+    elif num == 3:
+        resp = 'True'
     else:
-        resp = False
+        resp = 'False'
     primeDict = {'Num': num, 'Output': resp}
     return primeDict
 
 app.secret_key = "sekret"
 blueprint = make_slack_blueprint(
-    client_id="73266387591.2634598506870",
-    client_secret="410fba6fdc6db953b8bc7385399b8144",
-    scope=["identify", "chat:write:bot"],
-)
+    client_id = '73266387591.2668237953136',
+    client_secret = '5c3ccd39c90315cd68ee69abde4969fc',
+    scope=["identify", "chat:write:bot"],)
 app.register_blueprint(blueprint, url_prefix="/login")
 
 @app.route("/slack-alert/<string>")
 def slack_alert(string):
-    slack_alert = input("What do you want to say:\n")
+    slack_alert = string
     if not slack.authorized:
         return redirect(url_for("slack.login"))
     resp = slack.post("chat.postMessage", data={
         "channel": "#zer0",
         "text": {slack_alert},
     })
-    assert resp.json()["ok"], resp.text
-    return 'I just said ',{slack_alert},' in the #zer0 channel!'
+    assert resp.ok, resp.text
+    return f'I just said {(slack_alert)} in the #zer0 channel!'
            
            
 if __name__ == "__main__":
