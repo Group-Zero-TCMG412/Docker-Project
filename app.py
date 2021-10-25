@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, redirect, url_for
 from flask_dance.contrib.slack import make_slack_blueprint, slack
 import json
 import math
@@ -68,8 +68,8 @@ def prime_response(num):
                 resp = True
     else:
         resp = False
-    primDict = {'Num': num, 'Output': resp}
-    return "{num} is Prime: {resp}"
+    primeDict = {'Num': num, 'Output': resp}
+    return primeDict
 
 app.secret_key = "sekret"
 blueprint = make_slack_blueprint(
