@@ -84,7 +84,7 @@ def slack_alert(string):
     if not slack.authorized:
         return redirect(url_for("slack.login"))
     resp = slack.post("chat.postMessage", data={
-        "channel": "#tesing-day",
+        "channel": "#testing-day",
         "text": {slack_alert},
     })
     assert resp.ok, resp.text
