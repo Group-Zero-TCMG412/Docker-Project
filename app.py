@@ -22,8 +22,8 @@ def hello():
 @app.route("/md5/<string>", methods=["GET","POST"])
 def md5(string):
     result = hashlib.md5(string.encode('utf-8')).hexdigest()
-    hashData = {'Input':string,
-            'Output':result}
+    hashData = {'input':string,
+            'output':result}
     hashjson = json.dumps(hashData)
     print(hashjson)
     return hashjson
@@ -36,7 +36,7 @@ def factorial(factor):
         return 'Error, can not factor negative number.'
     else:
         product = math.factorial(factor)
-    factorialDict = {'Input':factor, 'Output': product}
+    factorialDict = {'input':factor, 'output': product}
     return factorialDict
 @app.route("/fibonacci/<int:fib>")
 def fibonacci(fib):
@@ -52,7 +52,7 @@ def fibonacci(fib):
             else:
                 break
             i = n
-    fibDict = {'Input': fib, 'Output': fibArray}
+    fibDict = {'input': fib, 'output': fibArray}
     return fibDict
 
 @app.route('/is-prime/<int:num>')
@@ -68,7 +68,7 @@ def prime_response(num):
         resp = 'True'
     else:
         resp = 'False'
-    primeDict = {'Num': num, 'Output': resp}
+    primeDict = {'input': num, 'output': resp}
     return primeDict
 
 app.secret_key = "sekret"
