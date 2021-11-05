@@ -9,6 +9,9 @@ import hashlib
 
 app = Flask(__name__)
 
+
+
+
 @app.route("/")
 def index():
     return "Index Page"
@@ -28,13 +31,6 @@ def md5(string):
     print(hashjson)
     return hashjson
 
-
-
-@app.route("/keyval", methods=["POST"])
-
-def keyval():
-
-    
 
 @app.route("/factorial/<int:factor>")
 def factorial(factor):
