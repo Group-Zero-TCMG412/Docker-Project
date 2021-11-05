@@ -1,11 +1,29 @@
 version: "3"
 
 services:
+<<<<<<< HEAD
         api:
         image: jnewton1452/group-zero:latest
         entrypoint: python app.py
           ports:
             - "80:80"
+=======
+        web:
+                # replace username/repo:tag with your name and image details
+                image: jnewton1452/docker-tutorial:part3
+                deploy:
+                        replicas: 8
+                        resources:
+                                limits:
+                                        cpus: "0.1"
+                                        memory: 50M
+                        restart_policy:
+                                condition: on-failure
+                ports:
+                        - "4000:80"
+                networks:
+                        - webnet
+>>>>>>> parent of fdfdeff (Update docker-compose.yml)
 
         redis:
                 image: redis
