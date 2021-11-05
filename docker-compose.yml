@@ -5,7 +5,7 @@ services:
         image: jnewton1452/group-zero:latest
         entrypoint: python app.py
           ports:
-          - '80:80'
+            - "80:80"
 
         redis:
                 image: redis
