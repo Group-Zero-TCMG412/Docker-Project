@@ -1,16 +1,15 @@
-version: "3"
-
+version: '3'
 services:
-        api:
-        image: jnewton1452/group-zero:latest
-        entrypoint: python app.py
-        env_file:
-          - .env
-          ports:
-          - '80:80'
-
-        redis:
-                image: redis
-                container_name: redis-container
-                ports:
-                  - "6379:6379"
+  api:
+    container_name: flask-container
+    build: .
+    entrypoint: python app.py
+    env_file:
+      - .env
+    ports:
+      - '5000:5000'
+  redis:
+    image: redis
+    container_name: redis-container
+    ports:
+      - "6379:6379"
