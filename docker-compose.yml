@@ -1,4 +1,8 @@
 version: "3.9"
         services:
                 api:
-                        image: jnewton1452/group-zero
+                        build: .
+                ports:
+                        - "80:80"
+                redis:
+                        image: "redis:alpine"
