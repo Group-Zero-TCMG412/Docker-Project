@@ -18,17 +18,9 @@ services:
                         - webnet
 
         redis:
-                container_name: "redis"
-                image: redis:alpine
-                command: redis-server /usr/local/etc/redis/redis.conf
-                ports:
-                  - "6379:6379"
-
-                volumes:
-                - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
-
-                networks:
-                        -webnet
+                image: redis:5.0
+                command: ["redis-server", "--appendonly", "yes"]
+                container_name: redis
 networks:
         webnet:
 
