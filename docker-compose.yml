@@ -16,5 +16,21 @@ services:
                         - "4000:80"
                 networks:
                         - webnet
+
+        redis:
+                container_name: "redis"
+                image: redis:alpine
+                command: redis-server /usr/local/etc/redis/redis.conf
+                ports:
+                  - "6379:6379"
+
+                volumes:
+                - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+
+                networks:
+                        -webnet
 networks:
         webnet:
+
+  
+      
