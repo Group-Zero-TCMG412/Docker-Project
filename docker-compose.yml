@@ -4,8 +4,6 @@ services:
         api:
         image: jnewton1452/group-zero:latest
         entrypoint: python app.py
-        env_file:
-          - .env
           ports:
           - '80:80'
 
