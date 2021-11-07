@@ -1,5 +1,7 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, request
 import time
+
+from redis.client import string_keys_to_dict
 from flask_dance.contrib.slack import make_slack_blueprint, slack
 import redis
 import json
@@ -10,13 +12,13 @@ import hashlib
 # Connect to Redis
 
 app = Flask(__name__)
-cache = redis.Redis(host='redis', port='6379')
+redis_client = redis.Redis(host='redis', port='6379', charset="utf-8", decode_responses=True)
 
 def get_hit_count():
     retries = 5
     while True:
         try:
-            return cache.incr('hits')
+            return redis_client.incr('hits')
         except redis.exceptions.ConnectionError as exc:
             if retries == 0:
                 raise exc
@@ -33,15 +35,42 @@ def show_user(username):
 @app.route("/hello")
 def hello():
     return "Hello, World"
+@app.route("/keyval", methods=['POST'])
+def keyvalPUT():
+    KeyDict = {}
+    if request.method == 'POST':
+        KeyPair = request.get_json()
+        key = KeyPair['key']
+        value = KeyPair['value']
+        if redis_client.exists(key) == 1:
+            KeyDict = {"key": key, "value": value,"command": "CREATE new-key/new-value","result": False, "error": "Unable to add pair: key already exists"}
+            return KeyDict
+        else:
+            redis_client.set(key, value)
+            KeyDict = {'key': key, 'value': value, 'command': 'Create new-key/new-value', 'result': True}
+            return KeyDict
+
+
+@app.route("/keyval/<string>", methods=["GET"])
+def keyvalGET(string):
+    if redis_client.exists(string) == 1:
+        KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': True}
+    else:
+        KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': False, 'error': 'key does not exist'}
+    return KeyDict
+    
 
 @app.route("/md5/<string>", methods=["GET","POST"])
 def md5(string):
+    if request.method == 'GET':
+        hash = redis_client.get(string)
+        return f'{hash}'.format(hash)
+
     result = hashlib.md5(string.encode('utf-8')).hexdigest()
-    hashData = {'input':string,
-            'output':result}
-    hashjson = json.dumps(hashData)
-    print(hashjson)
-    return hashjson
+    redis_client.set(string, json.dumps(result))
+    hash = redis_client.get(string)
+
+    return f'{hash}'.format(hash)
 
 
 @app.route("/factorial/<int:factor>")
