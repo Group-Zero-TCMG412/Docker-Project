@@ -1,6 +1,7 @@
 version: "3.9"
 services:
   web:
+    image: jnewton1452/group-zero:latest
     build:
         context: .
     ports:
