@@ -12,6 +12,7 @@ import hashlib
 # Connect to Redis
 
 app = Flask(__name__)
+
 redis_client = redis.Redis(host='redis', port='6379', charset="utf-8", decode_responses=True)
 
 def get_hit_count():
@@ -24,6 +25,8 @@ def get_hit_count():
                 raise exc
             retries -= 1
             time.sleep(0.5)
+
+
 
 @app.route("/count")
 def index():
