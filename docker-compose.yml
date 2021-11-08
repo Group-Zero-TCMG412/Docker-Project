@@ -3,19 +3,16 @@ services:
   web:
     image: jnewton1452/group-zero:latest
     build:
-        context: .
+      context: .
     ports:
       - "5000:5000"
     platform: linux/arm64
-    
+
   redis:
     image: redis:alpine
     volumes:
       - my_volume:/tmp/my_data
     platform: linux/arm64
-    
+
 volumes:
   my_volume: {}
-
-
-

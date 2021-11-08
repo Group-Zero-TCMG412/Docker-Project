@@ -38,7 +38,7 @@ def show_user(username):
 @app.route("/hello")
 def hello():
     return "Hello, World"
-@app.route("/keyval", methods=['POST'])
+@app.route("/keyval", methods=['POST', 'PUT'])
 def keyvalPUT():
     KeyDict = {}
     if request.method == 'POST':
@@ -46,21 +46,26 @@ def keyvalPUT():
         key = KeyPair['key']
         value = KeyPair['value']
         if redis_client.exists(key) == 1:
-            KeyDict = {"key": key, "value": value,"command": "CREATE new-key/new-value","result": False, "error": "Unable to add pair: key already exists"}
+            KeyDict = {"key": key, "value": value,"command": "CREATE {key}}/{value}}","result": False, "error": "Unable to add pair: key already exists"}
             return KeyDict
         else:
             redis_client.set(key, value)
             KeyDict = {'key': key, 'value': value, 'command': 'Create new-key/new-value', 'result': True}
             return KeyDict
+    elif request.method == 'PUT':
+        pass
 
 
-@app.route("/keyval/<string>", methods=["GET"])
+@app.route("/keyval/<string>", methods=["GET", 'DELETE'])
 def keyvalGET(string):
-    if redis_client.exists(string) == 1:
-        KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': True}
-    else:
-        KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': False, 'error': 'key does not exist'}
-    return KeyDict
+    if request.method == 'GET':
+        if redis_client.exists(string) == 1:
+            KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': True}
+        else:
+            KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': False, 'error': 'key does not exist'}
+        return KeyDict
+    elif request.method == 'DELETE':
+        pass
     
 
 @app.route("/md5/<string>", methods=["GET","POST"])
