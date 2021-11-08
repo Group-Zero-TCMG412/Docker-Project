@@ -61,7 +61,7 @@ def keyvalPUTPOST():
         if redis_client.exists(key) == 0:
             KeyDict = {'key': key, 'value': value, 'command': 'UPDATE {key}}/{value}}', 'result': False, 'error': 'Unable to update: key does not exist'}
             return KeyDict
-        else 
+        else:
             redis_client.set(key, value)
             KeyDict = {'key': key, 'value': value, 'command': 'UPDATE {key}}/{value}}', 'result': True, 'error': 'None'}
             return KeyDict
@@ -76,12 +76,20 @@ def keyvalGETDELETE(string):
             KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': False, 'error': 'key does not exist'}
         return KeyDict
     elif request.method == 'DELETE':
+<<<<<<< Updated upstream
         if redis_client.exists(string) == 1;
             KeyDict = {'Key': string, 'value': redis_client.del(string), 'command': 'DELETE' {key}, 'result': True, 'error': 'None'}
             return KeyDict
         else:
             KeyDict = {'Key': string, 'value': redis_client.get(string), 'command' : 'DELETE' {key}, 'result': False, 'error': 'Unable to delete, key not found'}
             return KeyDict
+=======
+        pass
+        #if redis_client.exists(string) == 1;
+            #KeyDict = {'Key': string, 'value': redis_client.del(string), 'command': 'DELETE' {key}, 'result': True}
+        #else:
+            #KeyDict = {'Key': string, 'value': , 'command' : 
+>>>>>>> Stashed changes
     
 
 @app.route("/md5/<string>", methods=["GET","POST"])
