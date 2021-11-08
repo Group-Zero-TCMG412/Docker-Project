@@ -48,22 +48,22 @@ def keyvalPUTPOST():
         key = KeyPair['key']
         value = KeyPair['value']
         if redis_client.exists(key) == 1:
-            KeyDict = {"key": key, "value": value,"command": "CREATE {key}}/{value}}","result": False, "error": "Unable to add pair: key already exists"}
+            KeyDict = {"key": key, "value": value,"command": f"CREATE {key}/{value}","result": False, "error": "Unable to add pair: key already exists"}
             return KeyDict
         else:
             redis_client.set(key, value)
-            KeyDict = {'key': key, 'value': value, 'command': 'Create new-key/new-value', 'result': True, 'error': 'None'}
+            KeyDict = {'key': key, 'value': value, 'command': f"CREATE {key}/{value}", 'result': True, 'error': 'None'}
             return KeyDict
     elif request.method == 'PUT':
         KeyPair = request.get_json()
         key = KeyPair['key']
         value = KeyPair['value']
         if redis_client.exists(key) == 0:
-            KeyDict = {'key': key, 'value': value, 'command': 'UPDATE {key}}/{value}}', 'result': False, 'error': 'Unable to update: key does not exist'}
+            KeyDict = {'key': key, 'value': value, 'command': f'UPDATE {key}/{value}', 'result': False, 'error': 'Unable to update: key does not exist'}
             return KeyDict
         else:
             redis_client.set(key, value)
-            KeyDict = {'key': key, 'value': value, 'command': 'UPDATE {key}}/{value}}', 'result': True, 'error': 'None'}
+            KeyDict = {'key': key, 'value': value, 'command': f'UPDATE {key}/{value}', 'result': True, 'error': 'None'}
             return KeyDict
 
 
@@ -78,11 +78,13 @@ def keyvalGETDELETE(string):
         
     elif request.method == 'DELETE':
         if redis_client.exists(string) == 1:
-            KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'DELETE {key}', 'result': True, 'error': 'None'}
+            key = string
+            KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': f'DELETE {key}', 'result': True, 'error': 'None'}
             redis_client.delete(string)
             return KeyDict
         else:
-            KeyDict = {'Key': string, 'value': redis_client.get(string), 'command' : 'DELETE {key}', 'result': False, 'error': 'Unable to delete, key not found'}
+            key = string
+            KeyDict = {'Key': string, 'value': redis_client.get(string), 'command' : f'DELETE {key}', 'result': False, 'error': 'Unable to delete, key not found'}
             return KeyDict
     
 
