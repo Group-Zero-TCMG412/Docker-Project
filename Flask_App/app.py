@@ -76,12 +76,13 @@ def keyvalGETDELETE(string):
             KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': False, 'error': 'key does not exist'}
         return KeyDict
         
-     elif request.method == 'DELETE':
-        if redis_client.exists(string) == 1
-            KeyDict = {'Key': string, 'value': redis_client.del(string), 'command': 'DELETE' {key}, 'result': True, 'error': 'None'}
+    elif request.method == 'DELETE':
+        if redis_client.exists(string) == 1:
+            KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'DELETE {key}', 'result': True, 'error': 'None'}
+            redis_client.delete(string)
             return KeyDict
         else:
-            KeyDict = {'Key': string, 'value': redis_client.get(string), 'command' : 'DELETE' {key}, 'result': False, 'error': 'Unable to delete, key not found'}
+            KeyDict = {'Key': string, 'value': redis_client.get(string), 'command' : 'DELETE {key}', 'result': False, 'error': 'Unable to delete, key not found'}
             return KeyDict
     
 
