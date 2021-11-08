@@ -38,8 +38,10 @@ def show_user(username):
 @app.route("/hello")
 def hello():
     return "Hello, World"
+
+
 @app.route("/keyval", methods=['POST', 'PUT'])
-def keyvalPUT():
+def keyvalPUTPOST():
     KeyDict = {}
     if request.method == 'POST':
         KeyPair = request.get_json()
@@ -50,14 +52,23 @@ def keyvalPUT():
             return KeyDict
         else:
             redis_client.set(key, value)
-            KeyDict = {'key': key, 'value': value, 'command': 'Create new-key/new-value', 'result': True}
+            KeyDict = {'key': key, 'value': value, 'command': 'Create new-key/new-value', 'result': True, 'error': 'None'}
             return KeyDict
     elif request.method == 'PUT':
-        pass
+        KeyPair = request.get_json()
+        key = KeyPair['key']
+        value = KeyPair['value']
+        if redis_client.exists(key) == 0:
+            KeyDict = {'key': key, 'value': value, 'command': 'UPDATE {key}}/{value}}', 'result': False, 'error': 'Unable to update: key does not exist'}
+            return KeyDict
+        else 
+            redis_client.set(key, value)
+            KeyDict = {'key': key, 'value': value, 'command': 'UPDATE {key}}/{value}}', 'result': True, 'error': 'None'}
+            return KeyDict
 
 
 @app.route("/keyval/<string>", methods=["GET", 'DELETE'])
-def keyvalGET(string):
+def keyvalGETDELETE(string):
     if request.method == 'GET':
         if redis_client.exists(string) == 1:
             KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': True}
@@ -65,7 +76,10 @@ def keyvalGET(string):
             KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': False, 'error': 'key does not exist'}
         return KeyDict
     elif request.method == 'DELETE':
-        pass
+        if redis_client.exists(string) == 1;
+            KeyDict = {'Key': string, 'value': redis_client.del(string), 'command': 'DELETE' {key}, 'result': True}
+        else:
+            KeyDict = {'Key': string, 'value': , 'command' : 
     
 
 @app.route("/md5/<string>", methods=["GET","POST"])
