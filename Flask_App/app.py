@@ -90,10 +90,6 @@ def keyvalGETDELETE(string):
 
 @app.route("/md5/<string>", methods=["GET","POST"])
 def md5(string):
-    if request.method == 'GET':
-        hash = redis_client.get(string)
-        return f'{hash}'.format(hash)
-
     result = hashlib.md5(string.encode('utf-8')).hexdigest()
     redis_client.set(string, json.dumps(result))
     hash = redis_client.get(string)
