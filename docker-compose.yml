@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 services:
   web:
     image: jnewton1452/group-zero:latest
