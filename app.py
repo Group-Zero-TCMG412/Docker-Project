@@ -133,14 +133,14 @@ def prime_response(num):
     if num > 3:
         for n in range(2, int(sqrt(num))+1):
             if (num % n) == 0:
-                resp = 'False'
+                resp = False
                 break
             else:
-                resp = 'True'
+                resp = True
     elif num == 3:
-        resp = 'True'
+        resp = True
     else:
-        resp = 'False'
+        resp = False
     primeDict = {'input': num, 'output': resp}
     return primeDict
 
@@ -165,4 +165,4 @@ def slack_alert(string):
            
            
 if __name__ == "__main__":
-    app.run(debug ='true', host='0.0.0.0', port=5000)
+    app.run(debug ='true', host='0.0.0.0')
