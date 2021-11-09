@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   web:
-    image: jnewton1452/group-zero:latest
+    build: .
     ports:
       - "80:5000"
 
