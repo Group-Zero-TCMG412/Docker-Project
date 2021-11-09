@@ -87,18 +87,14 @@ def keyvalGETDELETE(string):
             KeyDict = {'Key': string, 'value': redis_client.get(string), 'command' : f'DELETE {key}', 'result': False, 'error': 'Unable to delete, key not found'}
             return KeyDict
     
-
 @app.route("/md5/<string>", methods=["GET","POST"])
 def md5(string):
-    if request.method == 'GET':
-        hash = redis_client.get(string)
-        return f'{hash}'.format(hash)
-
     result = hashlib.md5(string.encode('utf-8')).hexdigest()
-    redis_client.set(string, json.dumps(result))
-    hash = redis_client.get(string)
-
-    return f'{hash}'.format(hash)
+    hashData = {'Input':string,
+            'Output':result}
+    #hashjson = json.dumps(hashData)
+    #print(hashjson)
+    return hashData
 
 
 @app.route("/factorial/<int:factor>")
