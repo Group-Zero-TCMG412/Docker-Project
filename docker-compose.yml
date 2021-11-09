@@ -7,7 +7,7 @@ services:
 
 
   redis:
-    image: redis:alpine
+    image: redis
     volumes:
       - my_volume:/tmp/my_data
  
