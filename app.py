@@ -1,5 +1,6 @@
-from flask import Flask, redirect, url_for, request
+from flask import Flask, redirect, url_for, request, Response
 import time
+from flask.helpers import make_response
 
 from redis.client import string_keys_to_dict
 from flask_dance.contrib.slack import make_slack_blueprint, slack
@@ -53,14 +54,14 @@ def keyvalPUTPOST():
         else:
             redis_client.set(key, value)
             KeyDict = {'key': key, 'value': value, 'command': f"CREATE {key}/{value}", 'result': True, 'error': 'None'}
-            return KeyDict
+            return Response(json.dumps(KeyDict)), 409
     elif request.method == 'PUT':
         KeyPair = request.get_json()
         key = KeyPair['key']
         value = KeyPair['value']
         if redis_client.exists(key) == 0:
             KeyDict = {'key': key, 'value': value, 'command': f'UPDATE {key}/{value}', 'result': False, 'error': 'Unable to update: key does not exist'}
-            return KeyDict
+            return Response(json.dumps(KeyDict)), 409
         else:
             redis_client.set(key, value)
             KeyDict = {'key': key, 'value': value, 'command': f'UPDATE {key}/{value}', 'result': True, 'error': 'None'}
@@ -72,9 +73,11 @@ def keyvalGETDELETE(string):
     if request.method == 'GET':
         if redis_client.exists(string) == 1:
             KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': True, 'error': 'None'}
+            return KeyDict
         else:
+            #resp = Flask.Response(status=409)
             KeyDict = {'Key': string, 'value': redis_client.get(string), 'command': 'READ key/value pair', 'result': False, 'error': 'key does not exist'}
-        return KeyDict
+            return Response(json.dumps(KeyDict)), 409
         
     elif request.method == 'DELETE':
         if redis_client.exists(string) == 1:
@@ -84,15 +87,16 @@ def keyvalGETDELETE(string):
             return KeyDict
         else:
             key = string
+            #resp = Flask.Response(status=409)
             KeyDict = {'Key': string, 'value': redis_client.get(string), 'command' : f'DELETE {key}', 'result': False, 'error': 'Unable to delete, key not found'}
-            return KeyDict
+            return Response(json.dumps(KeyDict)), 409
     
 
-@app.route("/md5/<string>", methods=["GET","POST"])
+@app.route("/md5/<string>")
 def md5(string):
     result = hashlib.md5(string.encode('utf-8')).hexdigest()
-    hashData = {'Input':string,
-            'Output':result}
+    hashData = {'input':string,
+            'output':result}
     #hashjson = json.dumps(hashData)
     #print(hashjson)
     return hashData
@@ -130,14 +134,14 @@ def prime_response(num):
     if num > 3:
         for n in range(2, int(sqrt(num))+1):
             if (num % n) == 0:
-                resp = 'False'
+                resp = False
                 break
             else:
-                resp = 'True'
+                resp = True
     elif num == 3:
-        resp = 'True'
+        resp = True
     else:
-        resp = 'False'
+        resp = False
     primeDict = {'input': num, 'output': resp}
     return primeDict
 
