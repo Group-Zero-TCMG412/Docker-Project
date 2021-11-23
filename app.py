@@ -10,6 +10,7 @@ import math
 from math import sqrt
 import hashlib
 
+
 app = Flask(__name__)
 
 
@@ -156,7 +157,7 @@ def slack_alert(string):
     slack_token = f.decrypt(Token)
     data = {
     'token': slack_token,
-    'channel': 'U02DVMTAH36',    # User ID. 
+    'channel': '#testing-day',    # User ID. 
     'as_user': True,
     'text': string
 }

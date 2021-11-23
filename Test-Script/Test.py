@@ -4,7 +4,7 @@ import sys
 
 import yaml
 import json
-
+from colorama import Fore
 
 
 def print_list_item(list):
@@ -55,7 +55,7 @@ for t in yaml.full_load(open('test.yaml')):
 
     E_PAD = '... '.ljust(33-len(ENDPOINT[:28]))
     M_PAD = ' '.ljust(7-len(METHOD))
-    print(f'Method  {METHOD}{M_PAD}{ENDPOINT[:28]} {E_PAD}', end='')
+    print(Fore.WHITE + f'Method  {METHOD}{M_PAD}{ENDPOINT[:28]} {E_PAD}', end='')
 
     try:
         raw_json = resp.json()
@@ -67,24 +67,24 @@ for t in yaml.full_load(open('test.yaml')):
     if resp.status_code in STATUS:
 
         if JSON_RESULT == EXP_RESULT or EXP_RESULT == None:
-            print(u"\u2705 PASSED")
+            print(u"\u2705 " + Fore.GREEN + "PASSED"+ Fore.WHITE)
 
             PASSED +=1
         elif INVALID_PAYLOAD:
-            print(u'\u274c FAILED')
-            print(f'    - INVALID JSON RESPONSE')
-            print(f"    - JSON DATA {resp.json()}")
+            print(u'\u274c ' + Fore.RED +  'FAILED'+ Fore.WHITE)
+            print(Fore.WHITE + f'    - INVALID JSON RESPONSE')
+            print(Fore.WHITE + f"    - JSON DATA {resp.json()}")
             FAILED +=1
         else:
-            print(u'\u274c FAILED')
+            print(Fore.WHITE + u'\u274c ' + Fore.RED +  'FAILED'+ Fore.WHITE)
             print(f"    - EXPECTED output: '{str(EXP_RESULT)}")
             print(f"    - ACTUAL output: '{str(JSON_RESULT)}")
             FAILED +=1
     else:
-        print(u'\u274c FAILED')
-        print(f"    - EXPECTED HTTP STATUS CODE: '{print_list_item(STATUS)}")
-        print(f"    - ACTUAL HTTP Status: '{resp.status_code}")
-        print(f"    - JSON DATA {resp.json()}")
+        print(u'\u274c ' + Fore.RED +  'FAILED'+ Fore.WHITE)
+        print(Fore.WHITE + f"    - EXPECTED HTTP STATUS CODE: '{print_list_item(STATUS)}")
+        print(Fore.WHITE + f"    - ACTUAL HTTP Status: '{resp.status_code}")
+        print(Fore.WHITE + f"    - JSON DATA {resp.json()}")
 
         FAILED+=1
 sys.exit(FAILED)
