@@ -34,7 +34,7 @@ def cli():
     keyvalget -> Entering this commanding will send a get request to /keyval/ endpoint. This command will execute a function that will ask the user for one input as well as a url.
 
 
-    keyvaldelte -> Entering this commanding will send a delete request to /keyval/ endpoint.  This command will execute a function that will ask the user for one input as well as a url.
+    keyvaldelete -> Entering this commanding will send a delete request to /keyval/ endpoint.  This command will execute a function that will ask the user for one input as well as a url.
     """
     pass
 
