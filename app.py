@@ -4,7 +4,7 @@ import requests
 from flask.helpers import make_response
 import os
 from redis.client import string_keys_to_dict
-from flask_dance.contrib.slack import make_slack_blueprint, slack
+from cryptography.fernet import Fernet
 
 import redis
 import json
@@ -154,7 +154,10 @@ def prime_response(num):
 
 @app.route("/slack-alert/<string>")
 def slack_alert(string):
-    slack_token = 'xoxb-73266387591-2668452831840-e7NOpMognGk50tyl40jXsb60'
+    key = b'fYJNS-io_ZkOD1WsuNtkZ60YydwyRU2dgiY8XH5mB40='
+    f = Fernet(key)
+    Token = b'gAAAAABhnQJ40STu8arPPZAiLfuGE9CgVGS4AMfZNv7aL2-GM0ctYqvbxXhKw0gSky4JoICTLcJm5tP6g09C6QrwQOIcu48OIg5Pzvtm_BtJtj-Ia9fVYiWnRNSvsrBISKC55wiaw0RKC5CmsFVv12C3m15US6EJIQ=='
+    slack_token = f.decrypt(Token)
     data = {
     'token': slack_token,
     'channel': 'U02DVMTAH36',    # User ID. 
