@@ -1,0 +1,139 @@
+- url: /md5/test
+  method: GET
+  result: 098f6bcd4621d373cade4e832627b4f6
+  status_codes:
+    - 200
+- url: /md5/string
+  method: GET
+  result: b45cffe084dd3d20d928bee85e7b0f21
+  status_codes:
+    - 200
+- url: /md5
+  method: GET
+  result:
+  status_codes:
+    - 400
+    - 404
+    - 405
+- url: /factorial/5
+  method: GET
+  result: 120
+  status_codes:
+    - 200
+- url: /factorial/test
+  method: GET
+  result:
+  status_codes:
+    - 400
+    - 404
+    - 405
+- url: /factorial/0
+  method: GET
+  result: 1
+  status_codes:
+    - 200
+- url: /fibonacci/12
+  method: GET
+  result: [0, 1, 1, 2, 3, 5, 8]
+  status_codes:
+    - 200
+- url: /fibonacci/21
+  method: GET
+  result: [0, 1, 1, 2, 3, 5, 8, 13, 21]
+  status_codes:
+    - 200
+- url: /fibonacci/string
+  method: GET
+  result:
+  status_codes:
+    - 400
+    - 404
+    - 405
+- url: /is-prime/13
+  method: GET
+  result: True
+  status_codes:
+    - 200
+- url: /is-prime/37
+  method: GET
+  result: True
+  status_codes:
+    - 200
+- url: /is-prime/one
+  method: GET
+  result:
+  status_codes:
+    - 400
+    - 404
+    - 405
+- url: /slack-alert/testing%20using%20testscript
+  method: GET
+  result: True
+  status_codes:
+    - 200
+
+- url: /keyval
+  method: POST
+  result: True
+  error:
+  key_key: test1
+  key_val: foobar
+  status_codes:
+    - 200
+- url: /keyval/test1
+  method: GET
+  result: True
+  error:
+  key_key: test1
+  key_val: foobar
+  status_codes:
+    - 200
+- url: /keyval
+  method: POST
+  result: False
+  error: True
+  key_key: test1
+  key_val:
+  status_codes:
+    - 400
+    - 404
+    - 405
+    - 409
+- url: /keyval
+  method: PUT
+  result: True
+  error:
+  key_key: test1
+  key_val: newVal
+  status_codes:
+    - 200
+- url: /keyval
+  method: PUT
+  result: False
+  error: True
+  key_key: unexpectedKey
+  key_val: newVal
+  status_codes:
+    - 400
+    - 404
+    - 405
+    - 409
+- url: /keyval/test1
+  method: DELETE
+  result: True
+  error:
+  key_key: test1
+  key_val:
+  status_codes:
+    - 200
+- url: /keyval/unexpectedKey
+  method: DELETE
+  result: False
+  error: True
+  key_key: unexpectedKey
+  key_val:
+  status_codes:
+    - 400
+    - 404
+    - 405
+    - 409

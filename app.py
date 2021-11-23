@@ -1,9 +1,11 @@
 from flask import Flask, redirect, url_for, request, Response
 import time
+import requests
 from flask.helpers import make_response
-
+import os
 from redis.client import string_keys_to_dict
 from flask_dance.contrib.slack import make_slack_blueprint, slack
+
 import redis
 import json
 import math
@@ -13,6 +15,8 @@ import hashlib
 # Connect to Redis
 
 app = Flask(__name__)
+
+
 
 redis_client = redis.Redis(host='redis', port='6379', charset="utf-8", decode_responses=True)
 
@@ -32,7 +36,7 @@ def get_hit_count():
 @app.route("/count")
 def index():
     count = get_hit_count()
-    return 'Hello World! I have been seen {} times.\n'.format(count)
+    return json.dumps(True)
 @app.route('/user/<username>')
 def show_user(username):
     return f'User {(username)}'
@@ -50,11 +54,12 @@ def keyvalPUTPOST():
         value = KeyPair['value']
         if redis_client.exists(key) == 1:
             KeyDict = {"key": key, "value": value,"command": f"CREATE {key}/{value}","result": False, "error": "Unable to add pair: key already exists"}
-            return KeyDict
+            return Response(json.dumps(KeyDict)), 409
+            
         else:
             redis_client.set(key, value)
             KeyDict = {'key': key, 'value': value, 'command': f"CREATE {key}/{value}", 'result': True, 'error': 'None'}
-            return Response(json.dumps(KeyDict)), 409
+            return KeyDict
     elif request.method == 'PUT':
         KeyPair = request.get_json()
         key = KeyPair['key']
@@ -145,24 +150,21 @@ def prime_response(num):
     primeDict = {'input': num, 'output': resp}
     return primeDict
 
-app.secret_key = "sekret"
-blueprint = make_slack_blueprint(
-    client_id = '73266387591.2668237953136',
-    client_secret = '5c3ccd39c90315cd68ee69abde4969fc',
-    scope=["identify", "chat:write:bot"],)
-app.register_blueprint(blueprint, url_prefix="/login")
+
 
 @app.route("/slack-alert/<string>")
 def slack_alert(string):
-    slack_alert = string
-    if not slack.authorized:
-        return redirect(url_for("slack.login"))
-    resp = slack.post("chat.postMessage", data={
-        "channel": "#testing-day",
-        "text": {slack_alert},
-    })
-    assert resp.ok, resp.text
-    return f'true'
+    slack_token = 'xoxb-73266387591-2668452831840-e7NOpMognGk50tyl40jXsb60'
+    data = {
+    'token': slack_token,
+    'channel': 'U02DVMTAH36',    # User ID. 
+    'as_user': True,
+    'text': string
+}
+    requests.post(url='https://slack.com/api/chat.postMessage',
+              data=data)
+    slackdict = {'input': string, 'output': True}
+    return slackdict
            
            
 if __name__ == "__main__":
