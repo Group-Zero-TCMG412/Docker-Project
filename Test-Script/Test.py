@@ -1,6 +1,5 @@
 import requests
 
-import os
 import sys
 
 import yaml
@@ -30,9 +29,11 @@ def check_json(json, keyval=False):
 PASSED = 0
 FAILED = 0
 
+location = input('Enter the address of the API you wish to test:\nhttp://')
+
 for t in yaml.full_load(open('test.yaml')):
     ENDPOINT = t['url']
-    URL = 'http://localhost:5000' + ENDPOINT
+    URL = 'http://'+ location + ENDPOINT
     METHOD = t['method']
     EXP_RESULT = t['result']
     STATUS = t['status_codes']
@@ -54,7 +55,7 @@ for t in yaml.full_load(open('test.yaml')):
 
     E_PAD = '... '.ljust(33-len(ENDPOINT[:28]))
     M_PAD = ' '.ljust(7-len(METHOD))
-    print(f'Method  [{METHOD}]{M_PAD}{ENDPOINT[:28]} {E_PAD}', end='')
+    print(f'Method  {METHOD}{M_PAD}{ENDPOINT[:28]} {E_PAD}', end='')
 
     try:
         raw_json = resp.json()

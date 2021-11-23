@@ -15,9 +15,26 @@
     - 400
     - 404
     - 405
+- url: /md5/15
+  method: GET
+  result:
+  status_codes:
+    - 200
+- url: /sha1
+  method: GET
+  result:
+  status_codes:
+    - 400
+    - 404
+    - 405
 - url: /factorial/5
   method: GET
   result: 120
+  status_codes:
+    - 200
+- url: /factorial/255
+  method: GET
+  result: 3350850684932979117652665123754814942022584063591740702576779884286208799035732771005626138126763314259280802118502282445926550135522251856727692533193070412811083330325659322041700029792166250734253390513754466045711240338462701034020262992581378423147276636643647155396305352541105541439434840109915068285430675068591638581980604162940383356586739198268782104924614076605793562865241982176207428620969776803149467431386807972438247689158656000000000000000000000000000000000000000000000000000000000000000
   status_codes:
     - 200
 - url: /factorial/test
@@ -32,6 +49,13 @@
   result: 1
   status_codes:
     - 200
+- url: /factorial/factorial
+  method: GET
+  result:
+  status_codes:
+    - 400
+    - 404
+    - 405
 - url: /fibonacci/12
   method: GET
   result: [0, 1, 1, 2, 3, 5, 8]
@@ -49,6 +73,11 @@
     - 400
     - 404
     - 405
+- url: /fibonacci/64
+  method: GET
+  result: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+  status_codes:
+    - 200
 - url: /is-prime/13
   method: GET
   result: True
@@ -59,7 +88,19 @@
   result: True
   status_codes:
     - 200
+- url: /is-prime/800
+  method: GET
+  result: False
+  status_codes:
+    - 200
 - url: /is-prime/one
+  method: GET
+  result:
+  status_codes:
+    - 400
+    - 404
+    - 405
+- url: /is-prime/int:prime
   method: GET
   result:
   status_codes:
@@ -71,7 +112,18 @@
   result: True
   status_codes:
     - 200
-
+- url: /slack-alert/testing?
+  method: GET
+  result: True
+  status_codes:
+    - 200
+- url: /slack-alert/?testing?
+  method: GET
+  result:
+  status_codes:
+    - 400
+    - 404
+    - 405
 - url: /keyval
   method: POST
   result: True

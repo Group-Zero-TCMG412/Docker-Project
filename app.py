@@ -2,17 +2,13 @@ from flask import Flask, redirect, url_for, request, Response
 import time
 import requests
 from flask.helpers import make_response
-import os
 from redis.client import string_keys_to_dict
 from cryptography.fernet import Fernet
-
 import redis
 import json
 import math
 from math import sqrt
-#from redis import Redis, RedisError
 import hashlib
-# Connect to Redis
 
 app = Flask(__name__)
 
@@ -164,9 +160,14 @@ def slack_alert(string):
     'as_user': True,
     'text': string
 }
-    requests.post(url='https://slack.com/api/chat.postMessage',
+    r = requests.post(url='https://slack.com/api/chat.postMessage',
               data=data)
-    slackdict = {'input': string, 'output': True}
+    if r.status_code == 404:
+        output = False
+    else:
+        output = True
+    slackdict = {'input': string, 'output': output}
+    print(slackdict)
     return slackdict
            
            

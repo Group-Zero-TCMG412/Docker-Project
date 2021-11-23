@@ -1,0 +1,8 @@
+dict = {key:key_val, val: val_val} 
+
+
+json = {
+    'input': helloworld
+    'output': lkadsfhdsaksjdhfdsajkhfjfkjsdah
+
+}
