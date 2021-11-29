@@ -2,6 +2,10 @@ language: Python
 Python:
   - 3.8
 
+stage:
+  - Flask-API
+  - Test-Script
+
 jobs:
   inlude:
     - stage: Flask-API
