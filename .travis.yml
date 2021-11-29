@@ -4,13 +4,13 @@ Python:
 
 jobs:
   inlude:
-    - stage: "Flask-API"
+    - stage: Flask-API
       services:
         - docker
       before_script: pip install docker-compose
       script:
         - docker-compose up --build
 
-    - stage: "Test-Script"
+    - stage: Test-Script
       script:
-        - python ./Test-Script/Test.py
+        - docker run jnewton1452/test-script
