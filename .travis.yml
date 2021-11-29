@@ -15,5 +15,5 @@ jobs:
       name: API
       script:
         - docker-compose up --build
-    - script: docker run jnewton1452/test-script
+    - script: python3 ./Test-Script/Test.py
       name: Test-Script
