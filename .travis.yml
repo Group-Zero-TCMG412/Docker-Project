@@ -15,5 +15,5 @@ jobs:
       name: API
       script:
         - docker-compose up --build
-    - script: docker run --net=host jnewton1452/test-script
+    - script: docker run jnewton1452/test-script
       name: Test-Script
