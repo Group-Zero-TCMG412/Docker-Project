@@ -11,11 +11,10 @@ jobs:
     - stage: Flask-API
       services:
         - docker
-      before_script: pip install docker-compose
+      before_script: pip install docker-compose pyyaml
       name: API
       script:
         - docker-compose up --build
 
-    - before_script: pip install pyyaml
     - script: python3 ./Test-Script/Test.py
       name: Test-Script
