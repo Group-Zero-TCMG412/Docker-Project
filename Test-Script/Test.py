@@ -29,8 +29,7 @@ def check_json(json, keyval=False):
 PASSED = 0
 FAILED = 0
 
-location = input('Enter the address of the API you wish to test:\nhttp://')
-
+location = 'localhost:5000'
 for t in yaml.full_load(open('test.yaml')):
     ENDPOINT = t['url']
     URL = 'http://'+ location + ENDPOINT
