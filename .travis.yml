@@ -15,4 +15,4 @@ jobs:
       services:
         - docker
       script:
-        - docker run jnewton1452/test-script
+        - docker run --net=host jnewton1452/test-script
