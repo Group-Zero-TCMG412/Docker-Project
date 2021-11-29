@@ -12,11 +12,13 @@ jobs:
       services:
         - docker
       before_script: pip install docker-compose
+      name: API
       script:
         - docker-compose up --build
-
-    - stage: Test-Script
-      services:
-        - docker
+      
+      name: Test-Script
       script:
         - docker run --net=host jnewton1452/test-script
+
+
+      
