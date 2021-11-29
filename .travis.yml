@@ -2,11 +2,15 @@ language: Python
 Python:
   - 3.8
 
-services:
-  - docker
+jobs:
+  inlude:
+    - stage: "Flask-API"
+      services:
+        - docker
+      before_script: pip install docker-compose
+      script:
+        - docker-compose up --build
 
-before_script: pip install docker-compose
-
-script:
-  - docker-compose up --build
-  - python3 ./Test-Script/Test.py
+    - stage: "Test-Script"
+      script:
+        - python3 ./Test-Script/Test.py
