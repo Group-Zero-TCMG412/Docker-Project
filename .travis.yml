@@ -15,6 +15,7 @@ jobs:
       name: API
       script:
         - docker-compose up --build
+
     - before_script: pip install pyyaml
     - script: python3 ./Test-Script/Test.py
       name: Test-Script
