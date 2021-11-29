@@ -13,4 +13,4 @@ jobs:
 
     - stage: "Test-Script"
       script:
-        - python3 ./Test-Script/Test.py
+        - python ./Test-Script/Test.py
