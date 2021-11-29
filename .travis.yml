@@ -12,5 +12,7 @@ jobs:
         - docker-compose up --build
 
     - stage: Test-Script
+      services:
+        - docker
       script:
         - docker run jnewton1452/test-script
