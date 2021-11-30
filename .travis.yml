@@ -5,6 +5,7 @@ Python:
 stage:
   - Flask-API
   - docker-compose push
+
 jobs:
   inlude:
     - stage: Flask-API
