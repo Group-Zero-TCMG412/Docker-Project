@@ -13,7 +13,6 @@ jobs:
         - docker
       before_script:
         - pip install docker-compose pyyaml colorama
-        - is script
         - chmod +x ./Test-Script/test.yaml
       name: API
       script:
