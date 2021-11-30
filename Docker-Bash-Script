@@ -1,4 +1,5 @@
 #!/bin/bash
 docker login -u jnewton1452 -p 60b6106f-fa78-4131-9c57-46203ca2a6ee
-docker-compose --build
+docker-compose up --build
+docker-compose down
 docker-compose push
