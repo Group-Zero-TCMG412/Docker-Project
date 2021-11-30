@@ -30,7 +30,7 @@ PASSED = 0
 FAILED = 0
 
 location = 'localhost:5000'
-for t in yaml.full_load(open(os.path.abspath('test.yaml'))):
+for t in yaml.full_load(open(os.path.abspath('Test-Script/test.yaml'))):
     ENDPOINT = t['url']
     URL = 'http://'+ location + ENDPOINT
     METHOD = t['method']
