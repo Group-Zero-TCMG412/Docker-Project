@@ -18,6 +18,7 @@ jobs:
       name: API
       script:
         - docker-compose up --build -d
+        - python3 wait.py
         - python3 ./Test-Script/Test.py
         - docker-compose down
     - stage: docker-compose
