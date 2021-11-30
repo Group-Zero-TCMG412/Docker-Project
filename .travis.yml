@@ -4,7 +4,7 @@ Python:
 
 stage:
   - Flask-API
-  - Test-Script
+  - docker-compose push
 
 jobs:
   inlude:
@@ -19,3 +19,9 @@ jobs:
       script:
         - docker-compose up --build -d
         - python3 ./Test-Script/Test.py
+    - stage: docker-compose push
+      services:
+        - docker
+      before_script:
+        - pip install docker-compose
+      script: -docker-compose push jnewton1452/group-zero-automated
