@@ -13,7 +13,7 @@ import hashlib
 
 app = Flask(__name__)
 
-
+# dadaw 
 
 redis_client = redis.Redis(host='redis', port='6379', charset="utf-8", decode_responses=True)
 
