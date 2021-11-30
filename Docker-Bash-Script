@@ -1,0 +1,3 @@
+#!/bin/bash
+docker login --jnewton1452 foo --$Partan145@0)
+docker-compose push jnewton1452/travis-api-pipeline

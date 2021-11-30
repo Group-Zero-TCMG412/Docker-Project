@@ -26,4 +26,4 @@ jobs:
       before_script:
         - pip install docker-compose
       script:
-        - docker-compose push jnewton1452/flask-api
+        - bash ./Docker-Bash-Script
