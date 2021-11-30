@@ -19,3 +19,11 @@ jobs:
       script:
         - docker-compose up --build -d
         - python3 ./Test-Script/Test.py
+        - docker-compose down
+    - stage: docker-compose
+      services:
+        - docker
+      before_script:
+        - pip install docker-compose
+      script:
+        - docker-compose push jnewton1452/flask-api
