@@ -2,7 +2,7 @@ version: "3.8"
 services:
   web:
     build: ./
-    image: jnewton1452/group-zero:latest
+    image: jnewton1452/travis-api-pipeline
     ports:
       - "5000:5000"
   redis:
