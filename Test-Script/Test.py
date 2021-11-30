@@ -29,7 +29,7 @@ def check_json(json, keyval=False):
 PASSED = 0
 FAILED = 0
 
-location = '172.18.0.2:5000'
+location = 'localhost:5000'
 for t in yaml.full_load(open('test.yaml')):
     ENDPOINT = t['url']
     URL = 'http://'+ location + ENDPOINT
