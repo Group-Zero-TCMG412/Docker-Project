@@ -11,7 +11,7 @@ jobs:
     - stage: Flask-API
       services:
         - docker
-      before_script: pip install docker-compose pyyaml
+      before_script: pip install docker-compose pyyaml colorama
       name: API
       script:
         - docker-compose up --build -d
